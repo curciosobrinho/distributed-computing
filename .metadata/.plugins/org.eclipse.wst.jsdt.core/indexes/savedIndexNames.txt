@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+/Users/curciojamunda/Dev/java/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3193206007.index
+1683022528.index
+3927879410.index
+1041984722.index
+442713893.index
