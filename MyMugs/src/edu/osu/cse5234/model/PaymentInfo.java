@@ -1,4 +1,4 @@
-package edu.osu.cse5234.controller;
+package edu.osu.cse5234.model;
 
 public class PaymentInfo implements java.io.Serializable {
 

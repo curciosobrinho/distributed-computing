@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.osu.cse5234.controller.Order;
-import edu.osu.cse5234.controller.Item;
-import edu.osu.cse5234.controller.PaymentInfo;
-import edu.osu.cse5234.controller.ShippingInfo;
+import edu.osu.cse5234.model.Item;
+import edu.osu.cse5234.model.Order;
+import edu.osu.cse5234.model.PaymentInfo;
+import edu.osu.cse5234.model.ShippingInfo;
 
 @Controller
 @RequestMapping("/purchase")
@@ -49,7 +49,8 @@ public class Purchase {
 		order.setItems(orderList);
 
 		request.setAttribute("order", order);
-
+		
+		request.setAttribute("pageTitle", "Order");
 		return "OrderEntryForm";
 	}
 

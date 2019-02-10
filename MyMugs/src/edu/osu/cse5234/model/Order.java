@@ -1,8 +1,9 @@
-package edu.osu.cse5234.controller;
+package edu.osu.cse5234.model;
 
 import java.math.BigDecimal;
 import java.util.List;
-import edu.osu.cse5234.controller.Item;
+
+import edu.osu.cse5234.model.Item;
 
 public class Order implements java.io.Serializable {
 
