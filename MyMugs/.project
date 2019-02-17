@@ -3,6 +3,8 @@
 	<name>MyMugs</name>
 	<comment></comment>
 	<projects>
+		<project>MyMugs-InventoryManagement-EJBClient</project>
+		<project>MyMugs-InventoryManagement-EJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

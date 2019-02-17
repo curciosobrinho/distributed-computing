@@ -39,3 +39,11 @@
 		</div>
 	</div>
 <%@ include file="footer.jsp" %>
+<script>
+var url_string = window.location.href;
+var url = new URL(url_string);
+var err = url.searchParams.get("error");
+if (err.length > 0){
+	alert(err)
+}
+</script>

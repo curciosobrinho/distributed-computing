@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.osu.cse5234.model.Item;
+import edu.osu.cse5234.business.OrderProcessingServiceBean;
+import edu.osu.cse5234.business.model.Item;
+import edu.osu.cse5234.business.view.InventoryService;
 import edu.osu.cse5234.model.Order;
 import edu.osu.cse5234.model.PaymentInfo;
 import edu.osu.cse5234.model.ShippingInfo;
+import edu.osu.cse5234.util.ServiceLocator;
 
 @Controller
 @RequestMapping("/purchase")
@@ -23,30 +26,11 @@ public class Purchase {
 	@RequestMapping(method = RequestMethod.GET)
 	public String viewOrderEntryPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// ... instantiate and set order object with items to display
-		Item item1 = new Item();
-		item1.setName("Cup Wonder");
-		item1.setPrice("5.90");
-
-		Item item2 = new Item();
-		item2.setName("Cup Magic");
-		item2.setPrice("4.90");
-
-		Item item3 = new Item();
-		item3.setName("Cup Dad Rocks");
-		item3.setPrice("6.10");
-
-		Item item4 = new Item();
-		item4.setName("Cup Follow Steps");
-		item4.setPrice("5.80");
-
+		
 		Order order = new Order();
-		List<Item> orderList = new ArrayList<Item>();
-		orderList.add(item1);
-		orderList.add(item2);
-		orderList.add(item3);
-		orderList.add(item4);
 
-		order.setItems(orderList);
+		InventoryService is = (InventoryService) ServiceLocator.getInventoryService();
+		order.setItems(is.getAvailableInventory().getItems());
 
 		request.setAttribute("order", order);
 		
@@ -68,11 +52,22 @@ public class Purchase {
 		
 		order.setItems(newList);
 		
-		request.setAttribute("order", order);
+		OrderProcessingServiceBean opb = (OrderProcessingServiceBean) ServiceLocator.getOrderProcessingService();
+		if (opb.validateItemAvailability(order)) {
+			
+			request.setAttribute("order", order);
+			
+			request.getSession().setAttribute("order", order);
+			
+			return "redirect:/purchase/paymentEntry";
+			
+		} else {
+	
+			request.setAttribute("errorMsg", "Please resubmit item quantities");
+			return "redirect:/purchase?error=Please resubmit item quantities";
+		}
 		
-		request.getSession().setAttribute("order", order);
 		
-		return "redirect:/purchase/paymentEntry";
 	}
 
 	@RequestMapping(path = "/paymentEntry", method = RequestMethod.GET)
@@ -131,15 +126,11 @@ public class Purchase {
 
 		// here we would save all the session values to DB
 		// for now, lets just save to session as well
-		String orderNumber = "1";
+		Order order = (Order) request.getSession().getAttribute("order");
 		
-		if (request.getSession().getAttribute("orderNumber") != null) {
-			orderNumber = request.getSession().getAttribute("orderNumber").toString();
-		}
-		
-		int c = Integer.valueOf(orderNumber);
-		orderNumber = String.valueOf(++c);
-		
+		OrderProcessingServiceBean opb = (OrderProcessingServiceBean) ServiceLocator.getOrderProcessingService();
+		String orderNumber = opb.processOrder(order);
+			
 		request.getSession().setAttribute("orderNumber", orderNumber);
 		
 		return "redirect:/purchase/viewConfirmation";
@@ -159,12 +150,8 @@ public class Purchase {
 		ShippingInfo shipping = (ShippingInfo) request.getSession().getAttribute("shipping");
 		request.setAttribute("shipping", shipping);
 
-		String orderNumber = "1";
-		
-		if (request.getSession().getAttribute("orderNumber") != null) {
-			orderNumber = request.getSession().getAttribute("orderNumber").toString();
-		}
-		
+		String orderNumber = request.getSession().getAttribute("orderNumber").toString();
+		request.setAttribute("orderNumber", orderNumber);
 		return "Confirmation";
 	}
 

@@ -1,4 +1,4 @@
-package edu.osu.cse5234.model;
+package edu.osu.cse5234.business.model;
 
 
 public class Item implements java.io.Serializable {

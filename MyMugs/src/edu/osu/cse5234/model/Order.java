@@ -3,7 +3,7 @@ package edu.osu.cse5234.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import edu.osu.cse5234.model.Item;
+import edu.osu.cse5234.business.model.Item;
 
 public class Order implements java.io.Serializable {
 
