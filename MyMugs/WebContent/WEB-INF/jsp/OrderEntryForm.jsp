@@ -21,9 +21,11 @@
 									<th scope="row"><c:out value="${loop.index +1}"></c:out></th>
 									<td><c:out value="${item.name}"></c:out> <form:hidden
 											path="items[${loop.index}].name" value="${item.name}" /></td>
-									<td>$<c:out value="${item.price}"></c:out> <form:hidden
-											path="items[${loop.index}].price" value="${item.price}" /></td>
-									<td><form:input path="items[${loop.index}].quantity" value="0"/></td>
+									<td>$<c:out value="${item.unitPrice}"></c:out> <form:hidden
+											path="items[${loop.index}].unitPrice" value="${item.unitPrice}" /></td>
+									<td><form:input path="items[${loop.index}].availableQuantity" value="0"/>
+									<form:hidden
+											path="items[${loop.index}].id" value="${item.id}" /></td>
 								</tr>
 							</c:forEach>
 

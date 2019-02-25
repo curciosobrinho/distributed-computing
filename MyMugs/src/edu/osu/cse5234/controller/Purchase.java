@@ -45,7 +45,7 @@ public class Purchase {
 		
 		for (Item item : order.getItems()) {
 			
-			if (Integer.parseInt(item.getQuantity()) > 0 ) {
+			if (item.getAvailableQuantity() > 0 ) {
 				newList.add(item);
 			}
 		}

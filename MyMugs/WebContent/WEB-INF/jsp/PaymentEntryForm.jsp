@@ -17,8 +17,8 @@
 							<tr>
 								<th scope="row"><c:out value="${loop.index +1}"></c:out></th>
 								<td><c:out value="${item.name}"></c:out></td>
-								<td>$<c:out value="${item.price}"></c:out></td>
-								<td><c:out value="${item.quantity}"></c:out></td>
+								<td>$<c:out value="${item.unitPrice}"></c:out></td>
+								<td><c:out value="${item.availableQuantity}"></c:out></td>
 							</tr>
 						</c:forEach>
 

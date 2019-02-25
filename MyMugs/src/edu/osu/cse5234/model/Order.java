@@ -36,9 +36,9 @@ public class Order implements java.io.Serializable {
 		
 		for(Item item : this.items) {
 			
-			float qty = Float.parseFloat(item.getQuantity());
+			float qty = (float)item.getAvailableQuantity();
 			
-			total += (Float.parseFloat(item.getPrice()) * qty) ;
+			total += (item.getUnitPrice() * qty) ;
 		}
 		
 		orderTotal = String.valueOf(round(total,2));
@@ -62,7 +62,7 @@ public class Order implements java.io.Serializable {
 		
 		for(Item item : this.items) {
 			
-			int qty = Integer.parseInt(item.getQuantity());
+			int qty = item.getAvailableQuantity();
 			
 			total += qty ;
 		}
