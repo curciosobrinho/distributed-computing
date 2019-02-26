@@ -40,8 +40,12 @@
 							<h3 class="text-center">Shipping</h3>
 							<hr>
 							<div class="form-group">
-								<label for="cc_name">Name</label>
+								<label for="name">Name</label>
 								<form:input path="name" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<form:input path="email" class="form-control" />
 							</div>
 							<div class="form-group">
 								<label>Address</label>
@@ -65,7 +69,10 @@
 									<form:input path="zip" class="form-control" />
 								</div>
 							</div>
-							
+							<div class="form-group">
+								<label>Country</label>
+								<form:input path="country" class="form-control" />
+							</div>
 						
 							<hr>
 							<div class="form-group row">

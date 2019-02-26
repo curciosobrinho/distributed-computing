@@ -2,6 +2,8 @@ package edu.osu.cse5234.business;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import edu.osu.cse5234.business.view.InventoryService;
 import edu.osu.cse5234.model.Order;
@@ -18,6 +20,9 @@ public class OrderProcessingServiceBean {
     /**
      * Default constructor. 
      */
+	@PersistenceContext
+	EntityManager entityManager;
+	
     public OrderProcessingServiceBean() {
         // TODO Auto-generated constructor stub
     }
@@ -30,6 +35,9 @@ public class OrderProcessingServiceBean {
     	if (isOK) {
     		
     		is.updateInventory(order.getItems());
+    		entityManager.persist(order);
+        	entityManager.flush();
+        	
     	}
     	
     	int randomNum = ThreadLocalRandom.current().nextInt(0, 100000 + 1);
@@ -43,7 +51,8 @@ public class OrderProcessingServiceBean {
     public boolean validateItemAvailability (Order order) {
 		
     	InventoryService is = (InventoryService) ServiceLocator.getInventoryService();
-    	return is.validateQuantity(order.getItems());
+    	boolean allGood = is.validateQuantity(order.getItems());
     	
+    	return allGood;
     }
 }

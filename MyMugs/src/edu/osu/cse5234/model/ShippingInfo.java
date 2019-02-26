@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="SHIPPING_INFO")
@@ -22,12 +23,53 @@ public class ShippingInfo implements java.io.Serializable {
 	@Column(name="ID")
 	private int id;
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name="EMAIL")
+    private String email;
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	/** Properties **/
+	@Transient
     private String name;
+	
+	@Column(name="ADDRESS1")
     private String addressLine1;
+	
+	@Column(name="ADDRESS2")
     private String addressLine2;
+	
+	@Column(name="CITY")
     private String city;
+	
+	@Column(name="STATE")
     private String state;
+	
+	@Column(name="COUNTRY")
+    private String country;
+	
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Column(name="POSTAL_CODE")
     private String zip;
     
     public String getName() {

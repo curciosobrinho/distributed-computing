@@ -22,10 +22,24 @@ public class PaymentInfo implements java.io.Serializable {
 	@Column(name="ID")
 	private int id;
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/** Properties **/
+	@Column(name="CARD_NUM")
     private String ccNumber;
+	
+	@Column(name="EXP_DATE")
     private String ccExpDate;
+	
+	@Column(name="CVV")
     private String ccCvvCode;
+	
+	@Column(name="HOLDER_NAME")
     private String ccHolderName;
     
     public String getCcNumber() {

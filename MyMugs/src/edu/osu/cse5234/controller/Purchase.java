@@ -144,6 +144,18 @@ public class Purchase {
 		// for now, lets just save to session as well
 		Order order = (Order) request.getSession().getAttribute("order");
 		
+		PaymentInfo payment = (PaymentInfo) request.getSession().getAttribute("payment");
+		request.setAttribute("payment", payment);
+
+		ShippingInfo shipping = (ShippingInfo) request.getSession().getAttribute("shipping");
+		request.setAttribute("shipping", shipping);
+		
+		order.setCustomerName(shipping.getName());
+		order.setCustomerEmail(shipping.getEmail());
+		
+		order.setShipping(shipping);
+		order.setPayment(payment);
+		
 		OrderProcessingServiceBean opb = (OrderProcessingServiceBean) ServiceLocator.getOrderProcessingService();
 		String orderNumber = opb.processOrder(order);
 			
