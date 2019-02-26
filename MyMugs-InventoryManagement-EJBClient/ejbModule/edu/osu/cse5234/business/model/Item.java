@@ -12,7 +12,11 @@ import javax.persistence.Transient;
 @Table(name="ITEM")
 public class Item implements java.io.Serializable {
 
-    /**
+    public Item() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * 
 	 */
 	@Transient

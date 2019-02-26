@@ -1,6 +1,7 @@
 package edu.osu.cse5234.business;
 
 import edu.osu.cse5234.business.model.Item;
+import edu.osu.cse5234.business.model.LineItem;
 import edu.osu.cse5234.business.view.Inventory;
 import edu.osu.cse5234.business.view.InventoryService;
 
@@ -39,17 +40,17 @@ public class InventoryServiceBean implements InventoryService {
 		
 	}
 	
-	public boolean validateQuantity(List <Item> items) {
+	public boolean validateQuantity(List <LineItem> items) {
 		
 		List <Item> dbItems = entityManager.createQuery(MY_QUERY, Item.class).getResultList();
 		
-		for (Item item : items) {
+		for (LineItem item : items) {
 			
 			for (Item dbItem : dbItems) {
 				
-				if (dbItem.getId() == item.getId()) {
+				if (dbItem.getItemNumber() == item.getItemNumber()) {
 					
-					if(item.getAvailableQuantity() > dbItem.getAvailableQuantity() ) {
+					if(item.getQuantity() > dbItem.getAvailableQuantity() ) {
 						return false;
 					}
 				}
@@ -59,7 +60,7 @@ public class InventoryServiceBean implements InventoryService {
 		return true;
 	}
 	
-	public boolean updateInventory(List <Item> items) {
+	public boolean updateInventory(List <LineItem> items) {
 		return true;
 	}
 }

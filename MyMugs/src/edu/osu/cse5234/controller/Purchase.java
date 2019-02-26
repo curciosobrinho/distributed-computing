@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.osu.cse5234.business.OrderProcessingServiceBean;
 import edu.osu.cse5234.business.model.Item;
+import edu.osu.cse5234.business.model.LineItem;
+import edu.osu.cse5234.business.view.Inventory;
 import edu.osu.cse5234.business.view.InventoryService;
 import edu.osu.cse5234.model.Order;
 import edu.osu.cse5234.model.PaymentInfo;
@@ -30,8 +32,22 @@ public class Purchase {
 		Order order = new Order();
 
 		InventoryService is = (InventoryService) ServiceLocator.getInventoryService();
-		order.setItems(is.getAvailableInventory().getItems());
+		Inventory in = is.getAvailableInventory();
 
+		List <LineItem> newList = new ArrayList <LineItem>();
+		
+		for (Item item : in.getItems()) {
+			
+			LineItem li = new LineItem();
+			li.setId(item.getId());
+			li.setItemName(item.getName());
+			li.setItemNumber(item.getItemNumber());
+			li.setPrice(item.getUnitPrice());
+			li.setQuantity(0);
+			newList.add(li);
+			
+		}
+		order.setItems(newList);
 		request.setAttribute("order", order);
 		
 		request.setAttribute("pageTitle", "Order");
@@ -41,11 +57,11 @@ public class Purchase {
 	@RequestMapping(path = "/submitItems", method = RequestMethod.POST)
 	public String submitItems(@ModelAttribute("order") Order order, HttpServletRequest request) {
 		
-		List <Item> newList = new ArrayList <Item>();
+		List <LineItem> newList = new ArrayList <LineItem>();
 		
-		for (Item item : order.getItems()) {
+		for (LineItem item : order.getItems()) {
 			
-			if (item.getAvailableQuantity() > 0 ) {
+			if (item.getQuantity() > 0 ) {
 				newList.add(item);
 			}
 		}

@@ -3,7 +3,7 @@ package edu.osu.cse5234.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import edu.osu.cse5234.business.model.Item;
+import edu.osu.cse5234.business.model.LineItem;
 
 public class Order implements java.io.Serializable {
 
@@ -13,15 +13,15 @@ public class Order implements java.io.Serializable {
 	private static final long serialVersionUID = 2L;
 
 	/** Properties **/
-    private List <Item> items;
+    private List <LineItem> items;
     private String orderTotal;
     private String quantityTotal;
 
-	public List<Item> getItems() {
+	public List<LineItem> getItems() {
 		return items;
 	}
 
-	public void setItems(List<Item> items) {
+	public void setItems(List<LineItem> items) {
 		this.items = items;
 	}
     
@@ -34,11 +34,11 @@ public class Order implements java.io.Serializable {
 		float total = 0;
 		
 		
-		for(Item item : this.items) {
+		for(LineItem item : this.items) {
 			
-			float qty = (float)item.getAvailableQuantity();
+			float qty = (float)item.getQuantity();
 			
-			total += (item.getUnitPrice() * qty) ;
+			total += (item.getPrice() * qty) ;
 		}
 		
 		orderTotal = String.valueOf(round(total,2));
@@ -60,9 +60,9 @@ public class Order implements java.io.Serializable {
 		
 		int total = 0;
 		
-		for(Item item : this.items) {
+		for(LineItem item : this.items) {
 			
-			int qty = item.getAvailableQuantity();
+			int qty = item.getQuantity();
 			
 			total += qty ;
 		}

@@ -3,6 +3,7 @@
 	<persistence-unit name="MyMugs-InventoryManagement-EJB" transaction-type="JTA">
 		<jta-data-source>jdbc/h2</jta-data-source>
 		<class>edu.osu.cse5234.business.model.Item</class>
+		<class>edu.osu.cse5234.business.model.LineItem</class>
 		<properties>
 			<property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
 			<property name="eclipselink.weaving" value="false"/>
