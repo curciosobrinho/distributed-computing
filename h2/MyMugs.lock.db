@@ -1,0 +1,6 @@
+#FileLock
+#Tue Feb 26 19:46:07 BRT 2019
+hostName=10.0.1.105
+id=1692bfc9581b50310bdf708c808436c5610b95bea16
+method=file
+server=10.0.1.105\:61535
