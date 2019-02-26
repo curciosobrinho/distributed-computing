@@ -1,5 +1,14 @@
 package edu.osu.cse5234.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="SHIPPING_INFO")
 public class ShippingInfo implements java.io.Serializable {
 
     /**
@@ -7,6 +16,12 @@ public class ShippingInfo implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 4L;
 	
+	/** Properties **/
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
+
 	/** Properties **/
     private String name;
     private String addressLine1;
