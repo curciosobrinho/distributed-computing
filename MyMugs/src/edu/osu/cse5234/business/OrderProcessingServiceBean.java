@@ -2,14 +2,16 @@ package edu.osu.cse5234.business;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import edu.osu.cse5234.business.view.InventoryService;
 import edu.osu.cse5234.model.Order;
 import edu.osu.cse5234.util.ServiceLocator;
-import java.util.concurrent.ThreadLocalRandom;
 
+import com.ups.shipping.client.ShippingInitiationClient;
 /**
  * Session Bean implementation class OrderProcessingServiceBean
  */
@@ -17,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @LocalBean
 public class OrderProcessingServiceBean {
 
+	private static String shippingResourceURI = "http://localhost:9080/UPS/jaxrs";
     /**
      * Default constructor. 
      */
@@ -37,13 +40,31 @@ public class OrderProcessingServiceBean {
     		is.updateInventory(order.getItems());
     		entityManager.persist(order);
         	entityManager.flush();
-        	
     	}
     	
-    	int randomNum = ThreadLocalRandom.current().nextInt(0, 100000 + 1);
+    	String orderNumber = String.valueOf(order.getId());
     	
-    	String orderNumber = String.valueOf(randomNum);
-		
+    	JsonObject requestJson = Json.createObjectBuilder()
+    			.add("Organization", "MyMugs Corp")
+    			.add("OrderRefId", order.getId())
+    			.add("Zip", order.getShipping().getZip())
+    			.add("ItemsNumber", Integer.parseInt(order.getQuantityTotal()))
+				.build();
+
+    	
+    	ShippingInitiationClient client = new ShippingInitiationClient(shippingResourceURI);
+    	JsonObject responseJson = client.invokeInitiateShipping(requestJson);
+    	System.out.println("UPS accepted request? " + responseJson.getBoolean("Accepted"));
+    	System.out.println("Shipping Reference Number: " +  responseJson.getInt("ShippingReferenceNumber"));
+
+    	if (responseJson.getBoolean("Accepted")) {
+    		
+    		String refNumber = String.valueOf(responseJson.getInt("ShippingReferenceNumber"));
+    		order.getShipping().setShippingRefNumber(refNumber);
+    		entityManager.persist(order);
+        	entityManager.flush();
+    	}
+    	
 		return orderNumber;
     	
     }

@@ -61,6 +61,17 @@ public class ShippingInfo implements java.io.Serializable {
 	@Column(name="COUNTRY")
     private String country;
 	
+	@Column(name="UPS_SHIPPING_REF")
+    private String shippingRefNumber; 
+	
+	public String getShippingRefNumber() {
+		return shippingRefNumber;
+	}
+
+	public void setShippingRefNumber(String shippingRefNumber) {
+		this.shippingRefNumber = shippingRefNumber;
+	}
+
 	public String getCountry() {
 		return country;
 	}
