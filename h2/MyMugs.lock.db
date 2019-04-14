@@ -1,6 +1,0 @@
-#FileLock
-#Sun Mar 24 12:38:13 BRT 2019
-hostName=10.0.1.103
-id=169b05a21207ef8b99ff1a561793203eb7ae04024f0
-method=file
-server=10.0.1.103\:50961
